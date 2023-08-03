@@ -10,7 +10,7 @@ packages = [{include = "karyakram_backend"}]
 python = "^3.11"
 fastapi = "^0.100.1"
 uvicorn = {extras = ["standard"], version = "^0.23.1"}
-
+sqlmodel = "^0.0.8"
 
 [build-system]
 requires = ["poetry-core"]
