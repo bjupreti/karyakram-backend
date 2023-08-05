@@ -8,7 +8,7 @@ print("Base",conn_str)
 
 engine = create_engine(conn_str, echo=True)
 
-def create_db_and_tables():
+def init_db():
     SQLModel.metadata.create_all(engine)
 
 
