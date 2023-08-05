@@ -1,7 +1,8 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
+# from pydantic import EmailStr
 
 class MFAOption(str, Enum):
     none = "none"
@@ -10,7 +11,7 @@ class MFAOption(str, Enum):
 
 
 class User(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(nullable=False, primary_key=True,index=True)
     first_name: str
     last_name: str
     email: str
@@ -26,3 +27,6 @@ class User(SQLModel, table=True):
     is_deleted: bool
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    # Relationship field to establish a one-to-many relationship
+    events: list["Event"] = Relationship(back_populates="user")
