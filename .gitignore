@@ -1,2 +1,2 @@
 __pycache__/
-karyakaram_backend/db/database.db
+*.db
