@@ -9,7 +9,11 @@ class MFAOption(str, Enum):
     phone = "phone"
     email = "email"
 
-
+# TODO:
+# 1. Create a relationship with events table
+# 2. Rename the tablename to users
+# 3. Maybe add indexing?
+# 4. Auto generate id, created_at and updated_at attributes
 class User(SQLModel, table=True):
     id: Optional[int] = Field(nullable=False, primary_key=True,index=True)
     first_name: str

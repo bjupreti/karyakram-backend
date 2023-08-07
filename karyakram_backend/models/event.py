@@ -1,8 +1,10 @@
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime 
-# from 
-# from models.user import User
 
+# TODO:
+# 1. Define relationship of user and group in events table
+# 2. Rename the tablename to events
+# 3. Auto generate id, created_at and updated_at attributes
 class Event(SQLModel, table=True):
     event_id: int = Field(default=None, primary_key=True, index=True)
     title: str
