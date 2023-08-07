@@ -1,8 +1,8 @@
 from fastapi import APIRouter,Depends,status,HTTPException,Response
-from karyakram_backend.models.user import User,MFAOption
-from karyakram_backend.schemas import userschema as schemas
+from models.user import User,MFAOption
+from schemas import userschema as schemas
 from sqlmodel import Session,select
-from karyakram_backend.db.database import get_session,init_db
+from db.database import get_session,init_db
 from typing import List
 
 
