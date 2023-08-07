@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field, Relationship
-from datetime import datetime
-from .user import User
+from datetime import datetime 
+# from 
+# from models.user import User
 
 class Event(SQLModel, table=True):
     event_id: int = Field(default=None, primary_key=True, index=True)
@@ -21,5 +22,5 @@ class Event(SQLModel, table=True):
     user_id: int = Field(default=None, foreign_key="user.id")
     
     # Foreign key relationship to User
-    user_id: int = Field(default=None, foreign_key="user.id")
-    user: User = Relationship(back_populates="events")
+    # user_id: int = Field(default=None, foreign_key="user.id")
+    # user: User = Relationship(back_populates="events")

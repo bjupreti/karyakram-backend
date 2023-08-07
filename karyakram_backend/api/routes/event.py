@@ -1,8 +1,8 @@
 from fastapi import APIRouter,Depends,status,HTTPException,Response
-from ...models.event import Event
+from karyakram_backend.models.event import Event
 from sqlmodel import Session,select
-from ...schemas import eventschema as schemas
-from ...db.database import get_session,init_db
+from karyakram_backend.db.database import get_session,init_db
+from karyakram_backend.schemas import eventschema as schemas
 from typing import List
 
 router = APIRouter(

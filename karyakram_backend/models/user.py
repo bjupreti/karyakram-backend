@@ -29,4 +29,4 @@ class User(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
     # Relationship field to establish a one-to-many relationship
-    events: list["Event"] = Relationship(back_populates="user")
+    # events: list["Event"] = Relationship(back_populates="user")

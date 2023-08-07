@@ -1,7 +1,6 @@
 from fastapi import FastAPI
-# from ..api.routes import hello
-from ..api.routes import event
-from ..api.routes import user
+from karyakram_backend.api.routes import event
+from karyakram_backend.api.routes import user
 
 app = FastAPI()
 
