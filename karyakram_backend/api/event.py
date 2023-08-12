@@ -1,32 +1,21 @@
-from fastapi import APIRouter,Depends,status,HTTPException,Response
+from fastapi import APIRouter, Depends, status, HTTPException, Response
 from models.event import Event
-from sqlmodel import Session,select
-from db.database import get_session,init_db
-from schemas import eventschema as schemas
-from typing import List
+from sqlmodel import Session, select
+from db.database import get_session, engine
+from schemas.event import EventCreate, EventResponse
+from sqlmodel import Session
 
-# TODO:
-# 1. Add path validation
-
-router = APIRouter(
-    prefix="/event",
-    tags=['EVENT']
-)
-
-@router.on_event("startup")
-def on_startup():
-    init_db()
+router = APIRouter(prefix="/events", tags=["Events"])
 
 
-
-@router.get("/",status_code=status.HTTP_200_OK,response_model = List[schemas.ShowEvent])
+@router.get("/", response_model=list[EventResponse])
 def get_events(db: Session = Depends(get_session)):
     events = db.query(Event).all()
     return events
 
-# function is the path operation function and .get("/events ") is the operation path and @app is the path operation decorator
-@router.post("/",status_code=status.HTTP_201_CREATED)
-def create_event(request: Event, db: Session = Depends(get_session)):
+
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=EventResponse)
+def create_event(request: EventCreate, db: Session = Depends(get_session)):
     new_event = Event(**request.dict())
     db.add(new_event)
     db.commit()
@@ -34,34 +23,40 @@ def create_event(request: Event, db: Session = Depends(get_session)):
     return new_event
 
 
-@router.get("/{event_id}",status_code=200,response_model=schemas.ShowEvent)
-def get_event(event_id, db: Session = Depends(get_session)):
+@router.get("/{event_id}", response_model=EventResponse)
+def get_event(event_id: int, db: Session = Depends(get_session)):
     event = db.query(Event).filter(Event.event_id == event_id).first()
     if not event:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Event with id {event_id} is not available")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Event with id {event_id} is not available",
+        )
     return event
 
 
-@router.delete("/{event_id}",status_code=status.HTTP_204_NO_CONTENT)
-def destroy(id:int,db: Session = Depends(get_session)):
+@router.delete("/{event_id}", status_code=status.HTTP_204_NO_CONTENT)
+def destroy(id: int, db: Session = Depends(get_session)):
     event_query = db.query(Event).filter(Event.event_id == id)
     event = event_query.first()
     if not event:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Event with id {id} is not available")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Event with id {id} is not available",
+        )
     event_query.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-@router.put("/{event_id}",status_code=status.HTTP_202_ACCEPTED)
-def update(id:int, request: Event, db: Session = Depends(get_session)): 
+
+@router.put("/{event_id}", status_code=status.HTTP_200_OK, response_model=EventResponse)
+def update(id: int, request: Event, db: Session = Depends(get_session)):
     event_query = db.query(Event).filter(Event.event_id == id)
     event = event_query.first()
     if not event:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Event with id {id} is not available")
-    event_query.update(request.dict(),synchronize_session=False)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Event with id {id} is not available",
+        )
+    event_query.update(request.dict(), synchronize_session=False)
     db.commit()
     return event_query.first()
-
