@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - ./karyakram:/var/lib/postgresql/data
+    # pass username and password to postgres from .env file
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    # port mapping with postgres container with host machine
+    ports:
+      - 5432:5432
+    networks:
+      - karyakram-network
+
+networks:
+  karyakram-network:
+    driver: bridge
