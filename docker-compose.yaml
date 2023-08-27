@@ -2,8 +2,7 @@ services:
   postgres:
     image: postgres
     volumes:
-      # - ./karyakram:/var/lib/postgresql/data
-      - E:\Install Software\PostgreSQL\15\data:/var/lib/postgresql/data
+      - ./karyakram:/var/lib/postgresql/data
     # pass username and password to postgres from .env file
     environment:
       - POSTGRES_USER=${DB_USERNAME}
