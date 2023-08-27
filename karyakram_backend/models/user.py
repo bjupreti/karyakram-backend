@@ -1,10 +1,10 @@
-# from sqlmodel import SQLModel, Field, Relationship
+# from sqlmodel import SQLModel, Field, Relationship,Enum
 # from datetime import datetime
-# from enum import Enum
+# from enum import Enum as PyEnum
 # from typing import Optional, List
 # # from pydantic import EmailStr
 
-# class MFAOption(str, Enum):
+# class MFAOption(str, PyEnum):
 #     none = "none"
 #     phone = "phone"
 #     email = "email"
@@ -15,7 +15,9 @@
 # # 3. Maybe add indexing?
 # # 4. Auto generate id, created_at and updated_at attributes
 # class User(SQLModel, table=True):
-#     id: Optional[int] = Field(nullable=False, primary_key=True,index=True)
+#     __tablename__ = "users"
+    
+#     user_id: int = Field(default=None, primary_key=True,index=True)
 #     first_name: str
 #     last_name: str
 #     email: str
@@ -23,7 +25,7 @@
 #     phone: str
 #     is_verified_email: bool
 #     is_verified_phone: bool
-#     mfa: MFAOption
+#     mfa: MFAOption = Field(sa_column=Field(Enum(MFAOption)))
 #     profile_pic_url: Optional[str] = None
 #     profile_pic_thumb_url: Optional[str] = None
 #     notification: bool
