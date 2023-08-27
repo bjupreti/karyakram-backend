@@ -6,7 +6,6 @@ DATABASE_URL = f"postgresql://{settings.db_username}:{settings.db_password}@{set
 
 engine = create_engine(DATABASE_URL, echo=True)
 
-
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 

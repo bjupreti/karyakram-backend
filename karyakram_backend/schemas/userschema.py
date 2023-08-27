@@ -25,7 +25,8 @@ class UserOut(UserBase):
     id: Optional[int] = None
     created_at: datetime
     updated_at: datetime
-
+    
+    # Orm_mode tells Pydantic to read the data even if it is not a dict, but an ORM model (or any other arbitrary object with attributes).
     class Config:
         orm_mode = True
 

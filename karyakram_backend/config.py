@@ -1,6 +1,9 @@
 from pydantic import BaseSettings
 import os
+from dotenv import load_dotenv
 
+# Load .env file
+load_dotenv() 
 
 class Settings(BaseSettings):
     # DB
@@ -11,7 +14,6 @@ class Settings(BaseSettings):
     db_username: str
 
     class Config:
-        env_file = ".env"
-
+        env_file = '.env'
 
 settings = Settings()

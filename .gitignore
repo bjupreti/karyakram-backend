@@ -133,3 +133,6 @@ dmypy.json
 
 # database
 karyakram
+
+# docker-compose dev file
+docker-compose.dev.yaml
